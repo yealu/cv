@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./careerDetail.module.css";
-import Head from 'next/head';
 
 const navItems = [
   { id: "super-villain-labs", label: "슈퍼빌런랩스" },
@@ -23,7 +22,6 @@ export default function CareerDetail() {
       if (isClickScrolling.current) return;
 
       const navBarHeight = navBarRef.current?.offsetHeight || 56;
-      const scrollY = window.scrollY;
       const activationPointViewport = navBarHeight + 20;
 
       let newActiveSectionId = "";
@@ -114,12 +112,8 @@ export default function CareerDetail() {
   };
 
   return (
-    <>
-      <Head>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
-      </Head>
       <div className={styles.container}>
-        <h1 className={styles.title}>경력기술서 (v8)</h1>
+        <h1 className={styles.title}>경력기술서</h1>
         <h2 className={styles.sectionTitle}>개요</h2>
         <p className={styles.paragraph}>재무/회계 전문성을 바탕으로 데이터 기반 의사결정과 운영 효율화를 이끌어온 전문가입니다. 슈퍼빌런랩스와 플루토스디에스에서 재무 관리, 가상자산 관리, 급여/임금 제도 설계를 주도하며, AI 및 파워쿼리를 활용한 데이터 처리와 시각화로 업무 효율성을 극대화했습니다. 복잡한 데이터를 직관적으로 표현하여 경영진의 신속한 의사결정을 지원하는 데 강점을 보유하고 있습니다.</p>
         <h2 className={styles.sectionTitle}>경력 및 성과</h2>
@@ -418,6 +412,5 @@ export default function CareerDetail() {
         <h2 className={styles.sectionTitle}>요약</h2>
         <p className={styles.paragraph}>슈퍼빌런랩스와 플루토스디에스에서 재무 관리, 가상자산 관리, 급여 제도 설계를 주도하며 조직의 효율성과 투명성을 극대화했습니다. AI 및 파워쿼리를 활용한 데이터 처리와 시각화로 경영진의 의사결정을 지원하며, 변화하는 환경에 유연하게 대응합니다.</p>
       </div>
-    </>
   );
 } 

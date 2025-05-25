@@ -150,7 +150,9 @@
 }
 
 .tableHeader {
-  composes: tableCell;
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
   background-color: #F3F4F6;
   color: #111827;
   width: 10%;
@@ -158,7 +160,9 @@
 }
 
 .tableFirstCell {
-  composes: tableCell;
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
   background-color: #E5E7EB;
   color: #333;
   font-weight: 700;
@@ -166,7 +170,9 @@
 }
 
 .tableDataCell {
-  composes: tableCell;
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
   background-color: #FFFFFF;
 }
 
