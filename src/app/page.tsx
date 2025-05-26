@@ -1,416 +1,116 @@
-"use client";
-import React, { useEffect, useRef, useState } from "react";
-import styles from "./careerDetail.module.css";
+import React from "react";
+import Link from "next/link";
+import styles from "./main.module.css";
 
-const navItems = [
-  { id: "super-villain-labs", label: "슈퍼빌런랩스" },
-  { id: "plutos-ds", label: "플루토스디에스" },
-  { id: "ilrowa", label: "주식회사 일로와" },
-  { id: "gorura", label: "고르라" },
-  { id: "taedaesan", label: "(주)태대산" },
-];
-
-export default function CareerDetail() {
-  const [activeSection, setActiveSection] = useState(navItems[0].id);
-  const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({});
-  const navBarRef = useRef<HTMLDivElement | null>(null);
-  const isClickScrolling = useRef(false);
-  const clickScrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (isClickScrolling.current) return;
-
-      const navBarHeight = navBarRef.current?.offsetHeight || 56;
-      const activationPointViewport = navBarHeight + 20;
-
-      let newActiveSectionId = "";
-
-      // Find the section whose top is closest to or above the activationPointViewport
-      // Iterate from top to bottom to give preference to higher sections if multiple are in view.
-      for (const item of navItems) {
-        const el = sectionRefs.current[item.id];
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          // To be active, top of section should be at or above viewport's activation line,
-          // AND some part of it must be visible (bottom > 0)
-          if (rect.top <= activationPointViewport && rect.bottom > activationPointViewport) {
-            newActiveSectionId = item.id;
-            break; // Found the highest section that meets criteria
-          }
-        }
-      }
-      
-      // If no section met the criteria (e.g. scrolled way down, or way up)
-      // A more robust way to handle this: find the section that's "most" in view or closest.
-      // For now, if nothing is "active" by the above, check if we're at the very top.
-      if (!newActiveSectionId) {
-        if (window.scrollY < 50 && navItems.length > 0) { // Very close to top
-          newActiveSectionId = navItems[0].id;
-        }
-        // If still no active section, it could mean we are between sections or at the bottom.
-        // In such cases, the last `activeSection` determined might be best to keep,
-        // or default to the last item if scrolled to bottom.
-        // For simplicity, if nothing found, try to keep current activeSection unless it's clearly wrong.
-        // The current logic means if nothing new is found, activeSection doesn't change from its last valid state by scroll.
-        // However, to ensure *something* is active if content is visible:
-        if (!newActiveSectionId && navItems.length > 0) {
-            // Fallback: find the last section whose top has been passed
-            for (let i = navItems.length - 1; i >= 0; i--) {
-                const item = navItems[i];
-                const el = sectionRefs.current[item.id];
-                if (el) {
-                    if (el.getBoundingClientRect().top <= activationPointViewport) {
-                        newActiveSectionId = item.id;
-                        break;
-                    }
-                }
-            }
-             if (!newActiveSectionId) newActiveSectionId = navItems[0].id; // Ultimate fallback
-        }
-
-      }
-      
-      if (newActiveSectionId && newActiveSectionId !== activeSection) {
-        setActiveSection(newActiveSectionId);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    // Initial call to set active section based on load position
-    setTimeout(handleScroll, 100); 
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (clickScrollTimeoutRef.current) {
-        clearTimeout(clickScrollTimeoutRef.current);
-      }
-    };
-  }, [activeSection]); // Rerun if activeSection changes to ensure consistency, or remove activeSection if it causes loops
-
-  const handleNavClick = (id: string) => (e: React.MouseEvent) => {
-    e.preventDefault();
-    setActiveSection(id);
-    
-    isClickScrolling.current = true;
-    if (clickScrollTimeoutRef.current) {
-      clearTimeout(clickScrollTimeoutRef.current);
-    }
-    clickScrollTimeoutRef.current = setTimeout(() => {
-      isClickScrolling.current = false;
-    }, 800);
-
-    const el = sectionRefs.current[id];
-    if (el) {
-      const navBarHeight = navBarRef.current?.offsetHeight || 56;
-      const top = el.getBoundingClientRect().top + window.scrollY - navBarHeight - 20;
-      window.scrollTo({
-        top: top,
-        behavior: "smooth",
-      });
-    }
-  };
-
+export default function MainPage() {
   return (
-      <div className={styles.container}>
-        <h1 className={styles.title}>경력기술서</h1>
-        <h2 className={styles.sectionTitle}>개요</h2>
-        <p className={styles.paragraph}>재무/회계 전문성을 바탕으로 데이터 기반 의사결정과 운영 효율화를 이끌어온 전문가입니다. 슈퍼빌런랩스와 플루토스디에스에서 재무 관리, 가상자산 관리, 급여/임금 제도 설계를 주도하며, AI 및 파워쿼리를 활용한 데이터 처리와 시각화로 업무 효율성을 극대화했습니다. 복잡한 데이터를 직관적으로 표현하여 경영진의 신속한 의사결정을 지원하는 데 강점을 보유하고 있습니다.</p>
-        <h2 className={styles.sectionTitle}>경력 및 성과</h2>
-        {/* 네비게이션 바 */}
-        <div className={styles.navBar} ref={navBarRef}>
-          {navItems.map(item => (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              className={
-                `${styles.navLink} ${activeSection === item.id ? styles.navLinkActive : ''}`
-              }
-              onClick={handleNavClick(item.id)}
-            >
-              {item.label}
-            </a>
-          ))}
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>안녕하세요, 이창신입니다</h1>
+        <p className={styles.subtitle}>데이터 기반 의사결정을 이끄는 재무 전문가</p>
+      </header>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>간단한 소개</h2>
+        <p className={styles.paragraph}>
+          복잡한 것을 단순하게 만드는 일을 좋아합니다. 
+          업무를 하다 보면 "이걸 꼭 이렇게까지 복잡하게 해야 할까?"라는 생각이 자주 드는데, 
+          그럴 때마다 더 나은 방법이 있을 거라는 생각으로 개선점을 찾아가고 있습니다.
+        </p>
+        <p className={styles.paragraph}>
+          재무와 회계 업무를 하면서 숫자 뒤에 숨은 이야기들을 발견하는 재미를 느꼈고, 
+          특히 가상자산이라는 새로운 영역에서 기존 원칙들을 적용해보며 많은 것을 배웠습니다. 
+          데이터를 정리하고 시각화하여 의사결정에 도움이 되는 자료를 만드는 일에 보람을 느낍니다.
+        </p>
+        <p className={styles.paragraph}>
+          새로운 것을 배우는 데 두려움이 없고, 피드백을 통해 성장하는 것을 즐깁니다. 
+          혼자 잘하는 것보다는 함께 더 나은 결과를 만들어가는 과정을 더 중요하게 생각합니다.
+        </p>
+      </section>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>연락처</h2>
+        <div className={styles.contactInfo}>
+          <div className={styles.contactItem}>
+            <span className={styles.contactIcon}>📧</span>
+            <strong>이메일:</strong>&nbsp;tlsl111009@email.com
+          </div>
+          <div className={styles.contactItem}>
+            <span className={styles.contactIcon}>📱</span>
+            <strong>연락처:</strong>&nbsp;010-3135-5120
+          </div>
+          <div className={styles.contactItem}>
+            <span className={styles.contactIcon}>👤</span>
+            <strong>이름:</strong>&nbsp;이창신
+          </div>
         </div>
-        {/* 슈퍼빌런랩스 */}
-        <section
-          id="super-villain-labs"
-          className={
-            `${styles.section} ${activeSection === "super-villain-labs" ? styles.sectionActive : ''}`
-          }
-          ref={el => { sectionRefs.current["super-villain-labs"] = el; }}
-        >
-          <h3 className={styles.companyTitle}>슈퍼빌런랩스 (SupervillainLabsInc.)</h3>
-          <p className={styles.paragraph}>
-            <strong className={styles.strong}>People Team/Finance Manager</strong> | 2024.01 - 2025.02
-          </p>
-          <h4 className={styles.subTitle}>핵심 키워드</h4>
-          <ul className={styles.list}>
-            <li className={styles.listItem}>재무 관리 | 데이터 기반 의사결정 | 가상자산 관리 | 세무 신고 | 급여 관리</li>
-          </ul>
-          <h4 className={styles.subTitle}>세부 내용</h4>
-          <table className={styles.table}>
-            <tbody>
-              <tr>
-                <th className={styles.tableHeader}>구분</th>
-                <th className={styles.tableHeader}>내용</th>
-              </tr>
-              <tr>
-                <td className={styles.tableFirstCell}>성과</td>
-                <td className={styles.tableDataCell}>
-                  <ul className={styles.list}>
-                    <li className={styles.listItem}>월말/분기별 결산 소요 시간 50% 이상 단축(회계법인 2개월 → 자체 월결산 1개월).</li>
-                    <li className={styles.listItem}>각종 신고 업무 누락 및 재신고율 0건 달성.</li>
-                    <li className={styles.listItem}>가상자산 트랜잭션 관리로 회계 및 감사 대비 체계 구축.</li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td className={styles.tableFirstCell}>역할</td>
-                <td className={styles.tableDataCell}>
-                  <ul className={styles.list}>
-                    <li className={styles.listItem}>경영진 의사결정에 필요한 재무 보고서 작성 및 프로젝트별 손익계산서 작성.</li>
-                    <li className={styles.listItem}>일일/주간/월간 자금 현황 관리, 부서(프로젝트)별 손익 관리.</li>
-                    <li className={styles.listItem}>가상자산 관리: 지갑별 트랜잭션 관리, 벨리데이터 위탁 운영, OTC 코인 매출 관리.</li>
-                    <li className={styles.listItem}>세무 신고 관리: 부가세, 원천세 신고, 외화 매출 및 수출실적명세서 작성.</li>
-                    <li className={styles.listItem}>급여 관리: 약 40명 급여 산출 및 지급, 사회보험 및 원천세 신고 관리.</li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td className={styles.tableFirstCell}>영향력/기여도</td>
-                <td className={styles.tableDataCell}>
-                  <ul className={styles.list}>
-                    <li className={styles.listItem}>결산 효율화로 경영진 보고 속도 개선.</li>
-                    <li className={styles.listItem}>가상자산 관리 체계화로 재무 투명성 및 감사 대응력 강화.</li>
-                    <li className={styles.listItem}>급여 관리 및 세무 신고 체계화로 조직 운영 안정성 제고.</li>
-                  </ul>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-        {/* 플루토스디에스 */}
-        <section
-          id="plutos-ds"
-          className={
-            `${styles.section} ${activeSection === "plutos-ds" ? styles.sectionActive : ''}`
-          }
-          ref={el => { sectionRefs.current["plutos-ds"] = el; }}
-        >
-          <h3 className={styles.companyTitle}>플루토스디에스 (한빗코)</h3>
-          <p className={styles.paragraph}>
-            <strong className={styles.strong}>경영관리 / Manager</strong> | 2022.01 - 2023.12
-          </p>
-          <h4 className={styles.subTitle}>핵심 키워드</h4>
-          <ul className={styles.list}>
-            <li className={styles.listItem}>재무 관리 | 가상자산 관리 | 급여 제도 설계 | 리스크 관리 | 데이터 분석</li>
-          </ul>
-          <h4 className={styles.subTitle}>세부 내용</h4>
-          <table className={styles.table}>
-            <tbody>
-              <tr>
-                <th className={styles.tableHeader}>구분</th>
-                <th className={styles.tableHeader}>내용</th>
-              </tr>
-              <tr>
-                <td className={styles.tableFirstCell}>성과</td>
-                <td className={styles.tableDataCell}>
-                  <ul className={styles.list}>
-                    <li className={styles.listItem}>코인마켓캡 API 연동으로 실시간 가상자산 시세 적용, 결산 자료 정확도 향상.</li>
-                    <li className={styles.listItem}>연봉 테이블 정규화로 급여 체계 개선, 리스크 관리 강화.</li>
-                    <li className={styles.listItem}>가상자산 실사보고서 작성으로 분기별 재무 투명성 제고.</li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td className={styles.tableFirstCell}>역할</td>
-                <td className={styles.tableDataCell}>
-                  <ul className={styles.list}>
-                    <li className={styles.listItem}>월말/분기별 결산 진행 및 재무제표, 손익계산서 작성.</li>
-                    <li className={styles.listItem}>가상자산 수불부 작성: 코인/지갑별 실사 수량 주간 보고, 하드월렛 관리.</li>
-                    <li className={styles.listItem}>연봉 테이블 제작 및 급여 산출(약 60명), 사회보험 및 원천세 신고 관리.</li>
-                    <li className={styles.listItem}>재무 관리: 일일 자금수지 정리, Burn rate 관리.</li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td className={styles.tableFirstCell}>영향력/기여도</td>
-                <td className={styles.tableDataCell}>
-                  <ul className={styles.list}>
-                    <li className={styles.listItem}>가상자산 데이터 기반 결산 체계로 재무 신뢰도 향상.</li>
-                    <li className={styles.listItem}>급여 제도 정규화로 인사 관리 효율성 증대.</li>
-                    <li className={styles.listItem}>리스크 관리 강화로 조직 안정성 제고.</li>
-                  </ul>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-        {/* 주식회사 일로와 */}
-        <section
-          id="ilrowa"
-          className={
-            `${styles.section} ${activeSection === "ilrowa" ? styles.sectionActive : ''}`
-          }
-          ref={el => { sectionRefs.current["ilrowa"] = el; }}
-        >
-          <h3 className={styles.companyTitle}>주식회사 일로와</h3>
-          <p className={styles.paragraph}>
-            <strong className={styles.strong}>경영지원 / 대리</strong> | 2020.12 - 2021.03
-          </p>
-          <h4 className={styles.subTitle}>핵심 키워드</h4>
-          <ul className={styles.list}>
-            <li className={styles.listItem}>재무 관리 | 데이터화 | 프로세스 효율화</li>
-          </ul>
-          <h4 className={styles.subTitle}>세부 내용</h4>
-          <table className={styles.table}>
-            <tbody>
-              <tr>
-                <th className={styles.tableHeader}>구분</th>
-                <th className={styles.tableHeader}>내용</th>
-              </tr>
-              <tr>
-                <td className={styles.tableFirstCell}>성과</td>
-                <td className={styles.tableDataCell}>
-                  <ul className={styles.list}>
-                    <li className={styles.listItem}>월결산 기간 50% 단축(외주 회계법인 의존 → 엑셀 분개장 전달).</li>
-                    <li className={styles.listItem}>자금 사용 데이터화로 보고 접근성 개선.</li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td className={styles.tableFirstCell}>역할</td>
-                <td className={styles.tableDataCell}>
-                  <ul className={styles.list}>
-                    <li className={styles.listItem}>월별 손익계산서 작성 및 자금 수지내역 보고.</li>
-                    <li className={styles.listItem}>엑셀 분개장 작성 및 외주 회계법인과 교차 검증.</li>
-                    <li className={styles.listItem}>급여 산출 및 지급, 사회보험 및 원천세 신고 관리.</li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td className={styles.tableFirstCell}>영향력/기여도</td>
-                <td className={styles.tableDataCell}>
-                  <ul className={styles.list}>
-                    <li className={styles.listItem}>자금 관리 투명성 향상.</li>
-                    <li className={styles.listItem}>결산 효율화로 경영진 보고 속도 개선.</li>
-                  </ul>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-        {/* 고르라 */}
-        <section
-          id="gorura"
-          className={
-            `${styles.section} ${activeSection === "gorura" ? styles.sectionActive : ''}`
-          }
-          ref={el => { sectionRefs.current["gorura"] = el; }}
-        >
-          <h3 className={styles.companyTitle}>고르라</h3>
-          <p className={styles.paragraph}>
-            <strong className={styles.strong}>경영관리 / 주임</strong> | 2019.06 - 2020.08
-          </p>
-          <h4 className={styles.subTitle}>핵심 키워드</h4>
-          <ul className={styles.list}>
-            <li className={styles.listItem}>재무 관리 | 손익분석 | 급여 제도 설계</li>
-          </ul>
-          <h4 className={styles.subTitle}>세부 내용</h4>
-          <table className={styles.table}>
-            <tbody>
-              <tr>
-                <th className={styles.tableHeader}>구분</th>
-                <th className={styles.tableHeader}>내용</th>
-              </tr>
-              <tr>
-                <td className={styles.tableFirstCell}>성과</td>
-                <td className={styles.tableDataCell}>
-                  <ul className={styles.list}>
-                    <li className={styles.listItem}>손익분기 보고서 대시보드화로 보고 주기 20% 단축.</li>
-                    <li className={styles.listItem}>시간외근무수당 제도 기획으로 급여 체계 개선.</li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td className={styles.tableFirstCell}>역할</td>
-                <td className={styles.tableDataCell}>
-                  <ul className={styles.list}>
-                    <li className={styles.listItem}>자금일보 작성 및 월별 자금수지 정리, 프로젝트별 손익계산서 작성.</li>
-                    <li className={styles.listItem}>연봉 테이블 제작: 시간외근무수당 제도 기획, 인센티브제 도입.</li>
-                    <li className={styles.listItem}>급여 산출 및 지급, 사회보험 및 원천세 신고 관리.</li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td className={styles.tableFirstCell}>영향력/기여도</td>
-                <td className={styles.tableDataCell}>
-                  <ul className={styles.list}>
-                    <li className={styles.listItem}>경영 보고 체계 개선.</li>
-                    <li className={styles.listItem}>급여 제도 개선으로 직원 만족도 향상.</li>
-                  </ul>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-        {/* 태대산 */}
-        <section
-          id="taedaesan"
-          className={
-            `${styles.section} ${activeSection === "taedaesan" ? styles.sectionActive : ''}`
-          }
-          ref={el => { sectionRefs.current["taedaesan"] = el; }}
-        >
-          <h3 className={styles.companyTitle}>(주)태대산</h3>
-          <p className={styles.paragraph}>
-            <strong className={styles.strong}>경영지원 / 대리</strong> | 2018.08 - 2019.04
-          </p>
-          <h4 className={styles.subTitle}>핵심 키워드</h4>
-          <ul className={styles.list}>
-            <li className={styles.listItem}>급여 관리 | 계약 관리 | 비용 절감</li>
-          </ul>
-          <h4 className={styles.subTitle}>세부 내용</h4>
-          <table className={styles.table}>
-            <tbody>
-              <tr>
-                <th className={styles.tableHeader}>구분</th>
-                <th className={styles.tableHeader}>내용</th>
-              </tr>
-              <tr>
-                <td className={styles.tableFirstCell}>성과</td>
-                <td className={styles.tableDataCell}>
-                  <ul className={styles.list}>
-                    <li className={styles.listItem}>계약 관리 개선으로 비용 절감.</li>
-                    <li className={styles.listItem}>급여 체계 정규화로 운영 효율성 증대.</li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td className={styles.tableFirstCell}>역할</td>
-                <td className={styles.tableDataCell}>
-                  <ul className={styles.list}>
-                    <li className={styles.listItem}>급여 산출 및 지급, 사회보험 및 원천세 신고 관리.</li>
-                    <li className={styles.listItem}>계약 관리: 업체별 계약서 검토, 해지 예정 업체 조율.</li>
-                    <li className={styles.listItem}>구매 및 발주: 비품 발주 및 단가 관리.</li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td className={styles.tableFirstCell}>영향력/기여도</td>
-                <td className={styles.tableDataCell}>
-                  <ul className={styles.list}>
-                    <li className={styles.listItem}>운영 비용 절감으로 재무 효율성 증대.</li>
-                    <li className={styles.listItem}>계약 관리 체계화로 조직 안정성 강화.</li>
-                  </ul>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-        <h2 className={styles.sectionTitle}>요약</h2>
-        <p className={styles.paragraph}>슈퍼빌런랩스와 플루토스디에스에서 재무 관리, 가상자산 관리, 급여 제도 설계를 주도하며 조직의 효율성과 투명성을 극대화했습니다. AI 및 파워쿼리를 활용한 데이터 처리와 시각화로 경영진의 의사결정을 지원하며, 변화하는 환경에 유연하게 대응합니다.</p>
-      </div>
+      </section>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>개인적 관심사 & 성장</h2>
+        <div className={styles.interestGrid}>
+          <div className={styles.interestItem}>
+            <h3 className={styles.interestTitle}>
+              <span className={styles.interestIcon}>🤖</span>
+              기술에 대한 관심
+            </h3>
+            <p className={styles.interestDescription}>
+              기존의 엑셀 원툴에서 Cursor, Claude 등 AI 도구를 업무에 적극 활용하여 반복 작업을 자동화하고, 
+              파워쿼리를 이용해 데이터 처리 효율성을 높이고 있습니다.
+            </p>
+          </div>
+          <div className={styles.interestItem}>
+            <h3 className={styles.interestTitle}>
+              <span className={styles.interestIcon}>📊</span>
+              데이터 시각화
+            </h3>
+            <p className={styles.interestDescription}>
+              복잡한 재무 데이터를 한눈에 이해할 수 있는 대시보드 만들기를 좋아합니다. 
+              숫자만 나열된 보고서보다는 직관적인 차트와 그래프로 스토리를 전달하는 것을 선호합니다.
+            </p>
+          </div>
+          <div className={styles.interestItem}>
+            <h3 className={styles.interestTitle}>
+              <span className={styles.interestIcon}>📚</span>
+              AI와 인문학적 성장
+            </h3>
+            <p className={styles.interestDescription}>
+              빠르게 발전하는 AI 기술을 실무에 효과적으로 적용하기 위해 관련 세미나와 온라인 강의를 꾸준히 수강하고 있으며, 
+              AI를 더욱 잘 이용하기 위해 인문학적 독서도 병행하고 있습니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>앞으로의 목표</h2>
+        <p className={styles.paragraph}>
+          저는 '일이 더 잘 굴러가게 만드는 사람'이 되고 싶습니다. 
+          새로운 무언가를 만드는 것도 좋지만, 이미 있는 구조를 더 깔끔하게 정리하고, 
+          덜 복잡하게 만드는 일에 더 잘 맞는 성향입니다.
+        </p>
+        <p className={styles.paragraph}>
+          숫자와 구조를 정리하는 데 익숙하고, 흐름을 바꿔 실수를 줄이는 방식으로 일해왔습니다. 
+          단순히 여러 일을 처리하는 것을 넘어서, 각 업무 간의 연결고리를 발견하고 
+          흐름을 재설계하는 데 집중하며, 조직 전체의 일하는 방식을 조금씩 개선하는 데 기여하고 싶습니다.
+        </p>
+        <p className={styles.paragraph}>
+          '이건 내 일이 아닌데'보다는 '이건 어떻게 하면 더 잘 굴러갈까'를 먼저 떠올리는 편입니다. 
+          함께 일하는 동료들이 조금 더 편하게, 실수 없이, 본질적인 일에 집중할 수 있는 환경을 만드는 데 
+          기여하는 동료가 되고 싶습니다.
+        </p>
+      </section>
+
+      <section className={styles.ctaSection}>
+        <h2 className={styles.ctaTitle}>더 자세한 경력이 궁금하시다면?</h2>
+        <p className={styles.ctaDescription}>
+          지금까지의 구체적인 경력과 성과를 확인해보세요
+        </p>
+        <Link href="/career" className={styles.ctaButton}>
+          상세 경력 보기
+          <span className={styles.ctaIcon}>→</span>
+        </Link>
+      </section>
+    </div>
   );
 } 

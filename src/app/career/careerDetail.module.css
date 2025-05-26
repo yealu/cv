@@ -1,0 +1,346 @@
+/* src/app/careerDetail.module.css */
+
+.container {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #F7F7F7;
+  margin: 0;
+  padding: 30px 20px 20px 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: #FFFFFF;
+  padding: 30px 30px 30px 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.title {
+  color: #1E3A8A;
+  border-bottom: 2px solid #1E3A8A;
+  padding-bottom: 10px;
+  font-size: 2em;
+  font-weight: 700 !important;
+}
+
+.sectionTitle {
+  color: #1E3A8A;
+  font-size: 1.5em;
+  margin-top: 30px;
+  font-weight: 700 !important;
+}
+
+.companyTitle {
+  color: #333;
+  font-size: 1.2em;
+  margin-top: 40px;
+  font-weight: 700 !important;
+}
+
+.subTitle {
+  color: #555;
+  font-size: 1.1em;
+  margin-top: 15px;
+  font-weight: 700 !important;
+}
+
+.paragraph {
+  color: #444;
+  font-size: 1em;
+}
+
+.navBar {
+  position: sticky;
+  top: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 0;
+  margin: 15px 0 24px 0;
+  border: none;
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.25), 0 4px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 16px !important;
+  z-index: 100;
+  height: 56px;
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+}
+
+.navLink {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 0 24px;
+  margin: 0;
+  border-radius: 0;
+  font-weight: 500;
+  font-size: 0.9em;
+  background: none;
+  border: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  outline: none;
+  cursor: pointer;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  border-bottom: 2px solid transparent;
+}
+
+.navLink::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  margin: 8px;
+}
+
+.navLink:hover, .navLink:focus {
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.navLink:hover::before, .navLink:focus::before {
+  opacity: 1;
+}
+
+.navLinkActive {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff !important;
+  font-weight: 700;
+  border-radius: 12px;
+  margin: 8px;
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.navLink:first-child {
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+}
+
+.navLink:last-child {
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  background-color: #F7F7F7;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tableCell {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.tableHeader {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  background-color: #F3F4F6;
+  color: #111827;
+  width: 10%;
+  font-weight: 700;
+}
+
+.tableFirstCell {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  background-color: #E5E7EB;
+  color: #333;
+  font-weight: 700;
+  width: 10%;
+}
+
+.tableDataCell {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  background-color: #FFFFFF;
+}
+
+.list {
+  padding-left: 20px;
+  margin-bottom: 8px;
+}
+
+.listItem {
+  margin-bottom: 8px;
+  color: #444;
+}
+
+.section {
+  margin-bottom: 40px;
+  margin-top: 0;
+  position: relative;
+}
+
+.section::before {
+  content: '';
+  display: block;
+  height: 80px;
+  margin-top: -80px;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.sectionActive {
+  background: #f4f7ff;
+  box-shadow: 0 12px 36px rgba(30, 58, 138, 0.16);
+  border-radius: 12px;
+  padding: 80px 36px 32px 36px;
+  margin-left: -24px;
+  margin-right: -24px;
+  margin-top: 0;
+  z-index: 1;
+  border: 1.5px solid #1E3A8A22;
+  transition: box-shadow 0.2s, background 0.2s, padding 0.2s;
+}
+
+.sectionActive::before {
+  height: 80px;
+  margin-top: -80px;
+}
+
+.strong {
+  font-weight: 700;
+}
+
+.companySubtitle {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.keywordList {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 1.5rem 0;
+}
+
+.keywordList li {
+  display: inline;
+  color: #666;
+}
+
+.keywordList li:not(:last-child)::after {
+  content: " | ";
+  margin: 0 0.5rem;
+  color: #ccc;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.table th,
+.table td {
+  padding: 1rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.table th {
+  background-color: #1E3A8A;
+  color: white;
+  font-weight: normal;
+  width: 120px;
+}
+
+.table td {
+  background-color: #fff;
+}
+
+.table td ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.table td ul li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.table td ul li:last-child {
+  margin-bottom: 0;
+}
+
+.detailTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.detailTable tr td:first-child {
+  background-color: #f8f9fa;
+  width: 120px;
+  font-weight: 500;
+  color: #333;
+}
+
+.detailTable td {
+  padding: 1rem;
+  border: 1px solid #dee2e6;
+  vertical-align: top;
+}
+
+.detailTable ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.detailTable ul li {
+  margin-bottom: 0.5rem;
+}
+
+.summary {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #F7F7F7;
+  border-radius: 5px;
+  color: #444;
+  line-height: 1.8;
+}
+
+.backButtonContainer {
+  margin-bottom: 2rem;
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background-color: #f8f9fa;
+  color: #495057;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid #dee2e6;
+}
+
+.backButton:hover {
+  background-color: #e9ecef;
+  color: #212529;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+  
