@@ -14,7 +14,7 @@ export default function MainPage() {
         <h2 className={styles.sectionTitle}>간단한 소개</h2>
         <p className={styles.paragraph}>
           복잡한 것을 단순하게 만드는 일을 좋아합니다. 
-          업무를 하다 보면 "이걸 꼭 이렇게까지 복잡하게 해야 할까?"라는 생각이 자주 드는데, 
+          업무를 하다 보면 &ldquo;이걸 꼭 이렇게까지 복잡하게 해야 할까?&rdquo;라는 생각이 자주 드는데, 
           그럴 때마다 더 나은 방법이 있을 거라는 생각으로 개선점을 찾아가고 있습니다.
         </p>
         <p className={styles.paragraph}>
@@ -85,7 +85,7 @@ export default function MainPage() {
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>앞으로의 목표</h2>
         <p className={styles.paragraph}>
-          저는 '일이 더 잘 굴러가게 만드는 사람'이 되고 싶습니다. 
+          저는 &lsquo;일이 더 잘 굴러가게 만드는 사람&rsquo;이 되고 싶습니다. 
           새로운 무언가를 만드는 것도 좋지만, 이미 있는 구조를 더 깔끔하게 정리하고, 
           덜 복잡하게 만드는 일에 더 잘 맞는 성향입니다.
         </p>
@@ -95,7 +95,7 @@ export default function MainPage() {
           흐름을 재설계하는 데 집중하며, 조직 전체의 일하는 방식을 조금씩 개선하는 데 기여하고 싶습니다.
         </p>
         <p className={styles.paragraph}>
-          '이건 내 일이 아닌데'보다는 '이건 어떻게 하면 더 잘 굴러갈까'를 먼저 떠올리는 편입니다. 
+          &lsquo;이건 내 일이 아닌데&rsquo;보다는 &lsquo;이건 어떻게 하면 더 잘 굴러갈까&rsquo;를 먼저 떠올리는 편입니다. 
           함께 일하는 동료들이 조금 더 편하게, 실수 없이, 본질적인 일에 집중할 수 있는 환경을 만드는 데 
           기여하는 동료가 되고 싶습니다.
         </p>
