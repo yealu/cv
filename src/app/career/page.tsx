@@ -166,7 +166,7 @@ export default function CareerDetail() {
                 <td className={styles.tableDataCell}>
                   <ul className={styles.list}>
                     <li className={styles.listItem}>월말/분기별 결산 소요 시간 50% 이상 단축(회계법인 2개월 → 자체 월결산 1개월).</li>
-                    <li className={styles.listItem}>각종 신고 업무 누락 및 재신고율 0건 달성.</li>
+                    <li className={styles.listItem}>각종 세금 등 신고 업무 누락 및 재신고율 0건 달성.</li>
                     <li className={styles.listItem}>가상자산 트랜잭션 관리로 회계 및 감사 대비 체계 구축.</li>
                   </ul>
                 </td>
@@ -177,19 +177,19 @@ export default function CareerDetail() {
                   <ul className={styles.list}>
                     <li className={styles.listItem}>경영진 의사결정에 필요한 재무 보고서 작성 및 프로젝트별 손익계산서 작성.</li>
                     <li className={styles.listItem}>일일/주간/월간 자금 현황 관리, 부서(프로젝트)별 손익 관리.</li>
-                    <li className={styles.listItem}>가상자산 관리: 지갑별 트랜잭션 관리, 벨리데이터 위탁 운영, OTC 코인 매출 관리.</li>
-                    <li className={styles.listItem}>세무 신고 관리: 부가세, 원천세 신고, 외화 매출 및 수출실적명세서 작성.</li>
-                    <li className={styles.listItem}>급여 관리: 약 40명 급여 산출 및 지급, 사회보험 및 원천세 신고 관리.</li>
+                    <li className={styles.listItem}>가상자산 지갑별 트랜잭션 관리, 벨리데이터 위탁 운영, OTC 코인 매출 관리.</li>
+                    <li className={styles.listItem}>부가세, 원천세 신고, 외화 매출 및 수출실적명세서 작성.</li>
+                    <li className={styles.listItem}>약 40명 급여 산출 및 지급, 사회보험 및 원천세 신고 관리.</li>
                   </ul>
                 </td>
               </tr>
               <tr>
-                <td className={styles.tableFirstCell}>영향력/기여도</td>
+                <td className={styles.tableFirstCell}>조직기여<br/>/성취</td>
                 <td className={styles.tableDataCell}>
                   <ul className={styles.list}>
                     <li className={styles.listItem}>결산 효율화로 경영진 보고 속도 개선.</li>
                     <li className={styles.listItem}>가상자산 관리 체계화로 재무 투명성 및 감사 대응력 강화.</li>
-                    <li className={styles.listItem}>급여 관리 및 세무 신고 체계화로 조직 운영 안정성 제고.</li>
+                    <li className={styles.listItem}>외주 급여 관리 및 세무 신고 → 내부 관리 및 체계화로 조직 운영 안정성 제고.</li>
                   </ul>
                 </td>
               </tr>
@@ -210,7 +210,7 @@ export default function CareerDetail() {
           </p>
           <h4 className={styles.subTitle}>핵심 키워드</h4>
           <ul className={styles.list}>
-            <li className={styles.listItem}>재무 관리 | 가상자산 관리 | 급여 제도 설계 | 리스크 관리 | 데이터 분석</li>
+            <li className={styles.listItem}>재무 관리 | 가상자산 관리 | 급여 제도 설계 | 데이터 분석</li>
           </ul>
           <h4 className={styles.subTitle}>세부 내용</h4>
           <table className={styles.table}>
@@ -223,9 +223,9 @@ export default function CareerDetail() {
                 <td className={styles.tableFirstCell}>성과</td>
                 <td className={styles.tableDataCell}>
                   <ul className={styles.list}>
-                    <li className={styles.listItem}>코인마켓캡 API 연동으로 실시간 가상자산 시세 적용, 결산 자료 정확도 향상.</li>
-                    <li className={styles.listItem}>연봉 테이블 정규화로 급여 체계 개선, 리스크 관리 강화.</li>
-                    <li className={styles.listItem}>가상자산 실사보고서 작성으로 분기별 재무 투명성 제고.</li>
+                    <li className={styles.listItem}>엑셀 파워쿼리 활용한 데이터 처리 자동화로 재무/회계 업무 효율성 개선.</li>
+                    <li className={styles.listItem}>가상자산 실사보고서 체계화로 분기별 재무 투명성 제고 및 감사 대응력 강화.</li>
+                    <li className={styles.listItem}>API 연동으로 실시간 가상자산 시세 적용, 결산 자료 정확도 향상</li>
                   </ul>
                 </td>
               </tr>
@@ -236,12 +236,12 @@ export default function CareerDetail() {
                     <li className={styles.listItem}>월말/분기별 결산 진행 및 재무제표, 손익계산서 작성.</li>
                     <li className={styles.listItem}>가상자산 수불부 작성: 코인/지갑별 실사 수량 주간 보고, 하드월렛 관리.</li>
                     <li className={styles.listItem}>연봉 테이블 제작 및 급여 산출(약 60명), 사회보험 및 원천세 신고 관리.</li>
-                    <li className={styles.listItem}>재무 관리: 일일 자금수지 정리, Burn rate 관리.</li>
+                    <li className={styles.listItem}>일일 자금수지 정리, Burn rate 관리.</li>
                   </ul>
                 </td>
               </tr>
               <tr>
-                <td className={styles.tableFirstCell}>영향력/기여도</td>
+                <td className={styles.tableFirstCell}>조직기여<br/>/성취</td>
                 <td className={styles.tableDataCell}>
                   <ul className={styles.list}>
                     <li className={styles.listItem}>가상자산 데이터 기반 결산 체계로 재무 신뢰도 향상.</li>
@@ -280,7 +280,7 @@ export default function CareerDetail() {
                 <td className={styles.tableFirstCell}>성과</td>
                 <td className={styles.tableDataCell}>
                   <ul className={styles.list}>
-                    <li className={styles.listItem}>월결산 기간 50% 단축(외주 회계법인 의존 → 엑셀 분개장 전달).</li>
+                    <li className={styles.listItem}>결산 데이터 외주 회계법인 의존 → 자체 월결산 체계 구축.</li>
                     <li className={styles.listItem}>자금 사용 데이터화로 보고 접근성 개선.</li>
                   </ul>
                 </td>
@@ -296,7 +296,7 @@ export default function CareerDetail() {
                 </td>
               </tr>
               <tr>
-                <td className={styles.tableFirstCell}>영향력/기여도</td>
+                <td className={styles.tableFirstCell}>조직기여<br/>/성취</td>
                 <td className={styles.tableDataCell}>
                   <ul className={styles.list}>
                     <li className={styles.listItem}>자금 관리 투명성 향상.</li>
@@ -321,7 +321,7 @@ export default function CareerDetail() {
           </p>
           <h4 className={styles.subTitle}>핵심 키워드</h4>
           <ul className={styles.list}>
-            <li className={styles.listItem}>재무 관리 | 손익분석 | 급여 제도 설계</li>
+            <li className={styles.listItem}>재무 관리 | 데이터 데시보드화 | 손익분석 | 급여 제도 설계</li>
           </ul>
           <h4 className={styles.subTitle}>세부 내용</h4>
           <table className={styles.table}>
@@ -334,8 +334,8 @@ export default function CareerDetail() {
                 <td className={styles.tableFirstCell}>성과</td>
                 <td className={styles.tableDataCell}>
                   <ul className={styles.list}>
-                    <li className={styles.listItem}>손익분기 보고서 대시보드화로 보고 주기 20% 단축.</li>
-                    <li className={styles.listItem}>시간외근무수당 제도 기획으로 급여 체계 개선.</li>
+                    <li className={styles.listItem}>직감 의존적 결정에서 숫자 기반 데이터로 변환하여 경영진 의사결정 지원.</li>
+                    <li className={styles.listItem}>시간외근무수당 제도 기획으로 급여 체계 개선 및 노무 리스크 감소.</li>
                   </ul>
                 </td>
               </tr>
@@ -346,15 +346,17 @@ export default function CareerDetail() {
                     <li className={styles.listItem}>자금일보 작성 및 월별 자금수지 정리, 프로젝트별 손익계산서 작성.</li>
                     <li className={styles.listItem}>연봉 테이블 제작: 시간외근무수당 제도 기획, 인센티브제 도입.</li>
                     <li className={styles.listItem}>급여 산출 및 지급, 사회보험 및 원천세 신고 관리.</li>
+                    <li className={styles.listItem}>그룹웨어 도입 및 초기 세팅</li>
                   </ul>
                 </td>
               </tr>
               <tr>
-                <td className={styles.tableFirstCell}>영향력/기여도</td>
+                <td className={styles.tableFirstCell}>조직기여<br/>/성취</td>
                 <td className={styles.tableDataCell}>
                   <ul className={styles.list}>
                     <li className={styles.listItem}>경영 보고 체계 개선.</li>
                     <li className={styles.listItem}>급여 제도 개선으로 직원 만족도 향상.</li>
+                    <li className={styles.listItem}>그룹웨어 도입으로 업무 프로세스 디지털화 및 효율화.</li>
                   </ul>
                 </td>
               </tr>
@@ -388,8 +390,8 @@ export default function CareerDetail() {
                 <td className={styles.tableFirstCell}>성과</td>
                 <td className={styles.tableDataCell}>
                   <ul className={styles.list}>
-                    <li className={styles.listItem}>계약 관리 개선으로 비용 절감.</li>
                     <li className={styles.listItem}>급여 체계 정규화로 운영 효율성 증대.</li>
+                    <li className={styles.listItem}>거래처 계약 관리 개선으로 비용 절감.</li>
                   </ul>
                 </td>
               </tr>
@@ -404,7 +406,7 @@ export default function CareerDetail() {
                 </td>
               </tr>
               <tr>
-                <td className={styles.tableFirstCell}>영향력/기여도</td>
+                <td className={styles.tableFirstCell}>조직기여<br/>/성취</td>
                 <td className={styles.tableDataCell}>
                   <ul className={styles.list}>
                     <li className={styles.listItem}>운영 비용 절감으로 재무 효율성 증대.</li>

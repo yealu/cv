@@ -8,6 +8,11 @@ export default function MainPage() {
       <header className={styles.header}>
         <h1 className={styles.title}>안녕하세요, 이창신입니다</h1>
         <p className={styles.subtitle}>데이터 기반 의사결정을 이끄는 재무 전문가</p>
+        <div className={styles.headerTags}>
+          <span className={styles.headerTag}>⚡ 효율성</span>
+          <span className={styles.headerTag}>🤖 AI 활용</span>
+          <span className={styles.headerTag}>💡 프로세스 개선</span>
+        </div>
       </header>
 
       <section className={styles.section}>

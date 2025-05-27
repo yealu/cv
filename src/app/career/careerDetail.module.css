@@ -1,16 +1,13 @@
 /* src/app/careerDetail.module.css */
 
 .container {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   color: #333;
-  background-color: #F7F7F7;
-  margin: 0;
-  padding: 30px 20px 20px 20px;
-  max-width: 900px;
   margin: 0 auto;
+  padding: 30px;
+  max-width: 900px;
   background-color: #FFFFFF;
-  padding: 30px 30px 30px 30px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
 }
@@ -138,9 +135,10 @@
   width: 100%;
   border-collapse: collapse;
   margin-top: 15px;
-  background-color: #F7F7F7;
+  background-color: #ffffff;
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .tableCell {
@@ -155,7 +153,7 @@
   border-bottom: 1px solid #ddd;
   background-color: #F3F4F6;
   color: #111827;
-  width: 10%;
+  width: 15%;
   font-weight: 700;
 }
 
@@ -166,7 +164,7 @@
   background-color: #E5E7EB;
   color: #333;
   font-weight: 700;
-  width: 10%;
+  width: 15%;
 }
 
 .tableDataCell {
@@ -314,10 +312,12 @@
 .summary {
   margin-top: 30px;
   padding: 20px;
-  background-color: #F7F7F7;
-  border-radius: 5px;
+  background-color: #ffffff;
+  border-radius: 8px;
   color: #444;
   line-height: 1.8;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid #1E3A8A;
 }
 
 .backButtonContainer {
@@ -328,19 +328,18 @@
   display: inline-flex;
   align-items: center;
   padding: 0.75rem 1.5rem;
-  background-color: #f8f9fa;
-  color: #495057;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
   text-decoration: none;
   border-radius: 8px;
   font-weight: 500;
-  transition: all 0.2s ease;
-  border: 1px solid #dee2e6;
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 .backButton:hover {
-  background-color: #e9ecef;
-  color: #212529;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
   
