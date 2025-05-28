@@ -116,7 +116,7 @@ export default function CareerDetail() {
       <div className={styles.container}>
         <div className={styles.backButtonContainer}>
           <Link href="/" className={styles.backButton}>
-            ← 개인 소개로 돌아가기
+            ← 이전 페이지로 돌아가기
           </Link>
         </div>
         <h1 className={styles.title}>경력기술서</h1>

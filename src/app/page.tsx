@@ -107,12 +107,8 @@ export default function MainPage() {
       </section>
 
       <section className={styles.ctaSection}>
-        <h2 className={styles.ctaTitle}>더 자세한 경력이 궁금하시다면?</h2>
-        <p className={styles.ctaDescription}>
-          지금까지의 구체적인 경력과 성과를 확인해보세요
-        </p>
         <Link href="/career" className={styles.ctaButton}>
-          상세 경력 보기
+          상세 경력 확인하기
           <span className={styles.ctaIcon}>→</span>
         </Link>
       </section>
