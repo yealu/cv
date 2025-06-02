@@ -1,0 +1,142 @@
+{
+  "company": "토스뱅크",
+  "position": {
+    "title": "Corporate Initiatives Team",
+    "department": "Corporate Initiatives & Insight Division",
+    "status": "신설 예정",
+    "team_composition": [
+      "Corporate Strategy Manager",
+      "Data Analyst", 
+      "Data Scientist",
+      "신규 채용자"
+    ],
+    "collaboration": "전사 다양한 팀과 긴밀 협업"
+  },
+  "key_responsibilities": [
+    {
+      "id": 1,
+      "area": "전사 KPI 관리",
+      "description": "핵심 성과 지표 정의 및 개선",
+      "importance": 5
+    },
+    {
+      "id": 2,
+      "area": "사업부 성과 관리", 
+      "description": "성과 설정, 전략 및 액션플랜 설계/운영 지원",
+      "importance": 5
+    },
+    {
+      "id": 3,
+      "area": "데이터 분석",
+      "description": "전사 관점 데이터 분석, 인사이트 도출 및 개선방안 제안", 
+      "importance": 4
+    },
+    {
+      "id": 4,
+      "area": "의사결정 지원",
+      "description": "경영진 전략적 의사결정 지원, 우선순위 조율",
+      "importance": 5
+    },
+    {
+      "id": 5,
+      "area": "중장기 계획",
+      "description": "IR, 토스 생태계 관점 마일스톤 제안",
+      "importance": 4
+    }
+  ],
+  "required_qualifications": [
+    {
+      "category": "경험 분야",
+      "description": "대기업/스타트업/IT/지주회사 FP&A/관리회계/전략/기획",
+      "priority": "High"
+    },
+    {
+      "category": "선호 경험", 
+      "description": "Professional firm 또는 인하우스 전사 전략/인사이트 도출",
+      "priority": "Medium"
+    },
+    {
+      "category": "분석 역량",
+      "description": "수치 기반 문제 분석 및 구조화 능력",
+      "priority": "High"
+    },
+    {
+      "category": "커뮤니케이션",
+      "description": "다조직 커뮤니케이션 및 협업 능력", 
+      "priority": "Medium"
+    },
+    {
+      "category": "실무 경험",
+      "description": "조직 성과 진단 및 개선 방향 제안 경험",
+      "priority": "High"
+    },
+    {
+      "category": "문제해결",
+      "description": "전사 이슈 해결 및 긍정적 영향력 발휘",
+      "priority": "Medium"
+    }
+  ],
+  "preferred_qualifications": [
+    {
+      "category": "신사업 발굴",
+      "description": "새로운 사업 기회 주도적 발굴 및 실행 경험",
+      "score": 3
+    },
+    {
+      "category": "수익성 분석", 
+      "description": "신사업 검토 및 수익성 분석 경험",
+      "score": 3
+    },
+    {
+      "category": "이해관계 조정",
+      "description": "전사경영계획 수립 시 부서간 이해관계 조정 경험",
+      "score": 2
+    }
+  ],
+  "benefits": {
+    "work_environment": {
+      "flexible_work": ["자율 출퇴근", "자율 휴가"],
+      "time_off": "3년마다 1개월 리프레시 휴가",
+      "weekly_perks": "Early Friday & 겨울방학"
+    },
+    "financial_support": {
+      "salary_system": "비포괄임금제",
+      "bonus": "반기별 성과급",
+      "referral_bonus": "500만원",
+      "housing_support": "주택자금 이자 지원"
+    },
+    "work_support": {
+      "expense_coverage": "업무비용 100%",
+      "meal_support": "식사비 100%", 
+      "equipment": "최고급 장비/소프트웨어",
+      "facilities": ["사내카페", "편의점", "헤어살롱", "주차장"]
+    }
+  },
+  "hiring_process": [
+    "서류접수",
+    "직무 인터뷰", 
+    "문화적합성 인터뷰",
+    "레퍼런스 체크",
+    "처우협의",
+    "최종합격 및 입사"
+  ],
+  "preparation_roadmap": {
+    "high_priority": [
+      "FP&A/전략기획 실무 경험 쌓기",
+      "데이터 분석 및 구조화 역량 강화", 
+      "조직 성과 관리 경험 축적"
+    ],
+    "medium_priority": [
+      "크로스 펑셔널 협업 경험 확대",
+      "전사 관점 사고 훈련",
+      "커뮤니케이션 스킬 향상"
+    ],
+    "nice_to_have": [
+      "신사업 기획/분석 프로젝트 참여",
+      "컨설팅 또는 전략 관련 외부 경험",
+      "이해관계자 조정 경험 쌓기"
+    ]
+  },
+  "analysis_date": "2024",
+  "notes": "신설 팀으로 성장 가능성이 높으며, 전사 관점에서 다양한 경험을 쌓을 수 있는 포지션"
+} 

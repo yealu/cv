@@ -38,7 +38,7 @@ export default function MainPage() {
         <div className={styles.contactInfo}>
           <div className={styles.contactItem}>
             <span className={styles.contactIcon}>📧</span>
-            <strong>이메일:</strong>&nbsp;tlsl111009@email.com
+            <strong>이메일:</strong>&nbsp;tlsl111009@gmail.com
           </div>
           <div className={styles.contactItem}>
             <span className={styles.contactIcon}>📱</span>
