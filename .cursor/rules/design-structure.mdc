@@ -1,0 +1,6 @@
+---
+description: 
+globs: **/*.tsx
+alwaysApply: false
+---
+스타일은 Tailwind CSS를 사용용

@@ -111,6 +111,10 @@ export default function MainPage() {
           상세 경력 확인하기
           <span className={styles.ctaIcon}>→</span>
         </Link>
+        <Link href="/pdf" className={styles.ctaButton} style={{ backgroundColor: '#dc3545', marginLeft: '16px' }}>
+          📄 PDF 다운로드
+          <span className={styles.ctaIcon}>↓</span>
+        </Link>
       </section>
     </div>
   );
