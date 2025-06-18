@@ -1,69 +1,212 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Link from 'next/link';
 
 export default function PDFPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [debugInfo, setDebugInfo] = useState('');
+
+  // 폰트 로딩 확인
+  useEffect(() => {
+    const checkFonts = async () => {
+      try {
+        // 시스템 폰트 사용을 위한 대기
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setDebugInfo('폰트 로딩 완료');
+      } catch (error: unknown) {
+        setDebugInfo('폰트 로딩 실패');
+        console.error('Font loading error:', error);
+      }
+    };
+    checkFonts();
+  }, []);
+
   const generatePDF = async () => {
     try {
+      setIsLoading(true);
+      setDebugInfo('PDF 생성 시작...');
+
       const element = document.getElementById('pdf-content');
-      if (!element) return;
+      if (!element) {
+        alert('PDF 콘텐츠를 찾을 수 없습니다.');
+        return;
+      }
+
+      setDebugInfo('요소 확인 완료, 캔버스 생성 중...');
 
       // PDF 출력 최적화 클래스 추가
       element.classList.add('pdf-optimized');
 
+      // 더 안전한 HTML2Canvas 설정
       const canvas = await html2canvas(element, {
-        scale: 2, // 고해상도로 증가
+        scale: 1.5, // 해상도 적절히 조정
         useCORS: true,
-        allowTaint: true,
+        allowTaint: false, // 보안 문제 방지
         backgroundColor: '#ffffff',
-        width: 1200,
-        height: element.scrollHeight,
-        logging: false,
-        foreignObjectRendering: true, // SVG 렌더링 개선
-        imageTimeout: 15000
+        width: element.offsetWidth,
+        height: element.offsetHeight,
+        logging: true, // 디버깅을 위해 로깅 활성화
+        foreignObjectRendering: false, // SVG 렌더링 문제 방지
+        imageTimeout: 10000,
+        removeContainer: true,
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: element.offsetWidth,
+        windowHeight: element.offsetHeight,
+        onclone: (clonedDoc) => {
+          // 클론된 문서에 스타일 강제 적용
+          const clonedElement = clonedDoc.getElementById('pdf-content');
+          if (clonedElement) {
+            clonedElement.style.fontFamily = 'Arial, sans-serif';
+            clonedElement.style.fontSize = '14px';
+            clonedElement.style.lineHeight = '1.6';
+            clonedElement.style.color = '#000000';
+            clonedElement.style.backgroundColor = '#ffffff';
+          }
+        }
       });
 
-      const imgData = canvas.toDataURL('image/png');
+      setDebugInfo(`캔버스 생성 완료 (${canvas.width}x${canvas.height})`);
+
+      if (canvas.width === 0 || canvas.height === 0) {
+        throw new Error('캔버스 크기가 0입니다. 콘텐츠를 확인해주세요.');
+      }
+
+      const imgData = canvas.toDataURL('image/png', 1.0);
+      
+      // 이미지 데이터 검증
+      if (imgData === 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==') {
+        throw new Error('빈 이미지가 생성되었습니다.');
+      }
+
+      setDebugInfo('이미지 데이터 생성 완료, PDF 생성 중...');
+
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
       
-      const imgWidth = canvas.width;
-      const imgHeight = canvas.height;
-      const ratio = pdfWidth / (imgWidth / 1.2);
+      // 첫 번째 페이지와 두 번째 페이지를 각각 캡처
+      const firstPage = document.getElementById('first-page');
+      const secondPage = document.getElementById('second-page');
       
-      const totalPages = Math.ceil((imgHeight * ratio) / pdfHeight);
-      
-      for (let i = 0; i < totalPages; i++) {
-        if (i > 0) pdf.addPage();
-        
-        const yOffset = -(pdfHeight * i) / ratio;
-        pdf.addImage(
-          imgData, 
-          'PNG', 
-          0, 
-          yOffset, 
-          pdfWidth, 
-          (imgHeight * ratio)
-        );
+      if (!firstPage || !secondPage) {
+        throw new Error('페이지 요소를 찾을 수 없습니다.');
       }
 
+      // 첫 번째 페이지 캡처
+      const firstPageCanvas = await html2canvas(firstPage, {
+        scale: 1.5,
+        useCORS: true,
+        allowTaint: false,
+        backgroundColor: '#ffffff',
+        width: firstPage.offsetWidth,
+        height: firstPage.offsetHeight,
+        logging: false,
+        foreignObjectRendering: false,
+        imageTimeout: 10000,
+        removeContainer: true,
+        scrollX: 0,
+        scrollY: 0,
+        onclone: (clonedDoc) => {
+          const clonedElement = clonedDoc.getElementById('first-page');
+          if (clonedElement) {
+            clonedElement.style.fontFamily = 'Arial, sans-serif';
+            clonedElement.style.fontSize = '14px';
+            clonedElement.style.lineHeight = '1.6';
+            clonedElement.style.color = '#000000';
+            clonedElement.style.backgroundColor = '#ffffff';
+          }
+        }
+      });
+
+      const firstPageImgData = firstPageCanvas.toDataURL('image/png', 1.0);
+      
+      // 첫 번째 페이지를 PDF에 추가 (가운데 정렬)
+      const firstPageRatio = Math.min(pdfWidth / firstPageCanvas.width, pdfHeight / firstPageCanvas.height);
+      const firstPageWidth = firstPageCanvas.width * firstPageRatio;
+      const firstPageHeight = firstPageCanvas.height * firstPageRatio;
+      const firstPageX = (pdfWidth - firstPageWidth) / 2; // 가운데 정렬
+      const firstPageY = (pdfHeight - firstPageHeight) / 2; // 세로 가운데 정렬
+      
+      pdf.addImage(
+        firstPageImgData,
+        'PNG',
+        firstPageX,
+        firstPageY,
+        firstPageWidth,
+        firstPageHeight
+      );
+
+      // 두 번째 페이지 추가
+      pdf.addPage();
+
+      // 두 번째 페이지 캡처
+      const secondPageCanvas = await html2canvas(secondPage, {
+        scale: 1.5,
+        useCORS: true,
+        allowTaint: false,
+        backgroundColor: '#ffffff',
+        width: secondPage.offsetWidth,
+        height: secondPage.offsetHeight,
+        logging: false,
+        foreignObjectRendering: false,
+        imageTimeout: 10000,
+        removeContainer: true,
+        scrollX: 0,
+        scrollY: 0,
+        onclone: (clonedDoc) => {
+          const clonedElement = clonedDoc.getElementById('second-page');
+          if (clonedElement) {
+            clonedElement.style.fontFamily = 'Arial, sans-serif';
+            clonedElement.style.fontSize = '14px';
+            clonedElement.style.lineHeight = '1.6';
+            clonedElement.style.color = '#000000';
+            clonedElement.style.backgroundColor = '#ffffff';
+          }
+        }
+      });
+
+      const secondPageImgData = secondPageCanvas.toDataURL('image/png', 1.0);
+      
+      // 두 번째 페이지를 PDF에 추가 (가운데 정렬)
+      const secondPageRatio = Math.min(pdfWidth / secondPageCanvas.width, pdfHeight / secondPageCanvas.height);
+      const secondPageWidth = secondPageCanvas.width * secondPageRatio;
+      const secondPageHeight = secondPageCanvas.height * secondPageRatio;
+      const secondPageX = (pdfWidth - secondPageWidth) / 2; // 가운데 정렬
+      const secondPageY = (pdfHeight - secondPageHeight) / 2; // 세로 가운데 정렬
+      
+      pdf.addImage(
+        secondPageImgData,
+        'PNG',
+        secondPageX,
+        secondPageY,
+        secondPageWidth,
+        secondPageHeight
+      );
+
+      setDebugInfo('PDF 저장 중...');
       pdf.save('이창신_경력기술서.pdf');
+      
+      setDebugInfo('PDF 생성 완료!');
       
       // PDF 생성 완료 후 최적화 클래스 제거
       element.classList.remove('pdf-optimized');
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('PDF 생성 오류:', error);
-      alert('PDF 생성 중 오류가 발생했습니다.');
+      const errorMessage = error instanceof Error ? error.message : '알 수 없는 오류';
+      setDebugInfo(`오류 발생: ${errorMessage}`);
+      alert(`PDF 생성 중 오류가 발생했습니다: ${errorMessage}`);
       
       // 오류 발생시에도 클래스 제거
       const cleanupElement = document.getElementById('pdf-content');
       if (cleanupElement) {
         cleanupElement.classList.remove('pdf-optimized');
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -75,20 +218,32 @@ export default function PDFPage() {
           <Link href="/" className="text-blue-600 hover:text-blue-800 font-medium">
             ← 홈으로 돌아가기
           </Link>
-          <button
-            onClick={generatePDF}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors"
-          >
-            PDF 다운로드
-          </button>
+          <div className="flex items-center gap-4">
+            {debugInfo && (
+              <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-3 py-1 rounded text-sm">
+                {debugInfo}
+              </div>
+            )}
+            <button
+              onClick={generatePDF}
+              disabled={isLoading}
+              className={`${
+                isLoading 
+                  ? 'bg-gray-400 cursor-not-allowed' 
+                  : 'bg-blue-600 hover:bg-blue-700'
+              } text-white px-6 py-2 rounded-lg font-medium transition-colors`}
+            >
+              {isLoading ? '생성 중...' : 'PDF 다운로드'}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* PDF 콘텐츠 영역 */}
-      <div id="pdf-content" className="max-w-4xl mx-auto bg-white shadow-2xl">
+      <div id="pdf-content" className="max-w-4xl mx-auto space-y-8" style={{ fontFamily: 'Arial, sans-serif' }}>
         
         {/* 첫 번째 페이지: 개인정보 + 핵심역량 + 기술스택 */}
-        <div className="page-break-after">
+        <div id="first-page" className="bg-white shadow-2xl">
           {/* 헤더 섹션 */}
           <div className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 text-white p-12 overflow-hidden">
             <div className="absolute inset-0 bg-black/20"></div>
@@ -166,51 +321,51 @@ export default function PDFPage() {
             <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">기술 스택 및 도구</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               <div className="bg-white p-6 rounded-xl border border-gray-200 text-center card-shadow">
-                <div className="text-3xl mb-3 icon-optimized">🐍</div>
-                <h4 className="font-semibold text-high-contrast">Python</h4>
-                <p className="text-sm text-gray-600 mt-2">데이터 분석 및 자동화</p>
+                <div className="text-3xl mb-3 icon-optimized">📉</div>
+                <h4 className="font-semibold text-high-contrast">Burn Rate 관리</h4>
+                <p className="text-sm text-gray-600 mt-2">자금 소진율 분석</p>
               </div>
               <div className="bg-white p-6 rounded-xl border border-gray-200 text-center hover:shadow-lg transition-shadow">
                 <div className="text-3xl mb-3">📊</div>
-                <h4 className="font-semibold text-gray-800">Excel</h4>
-                <p className="text-sm text-gray-600 mt-2">고급 데이터 분석</p>
+                <h4 className="font-semibold text-gray-800">Excel 파워쿼리</h4>
+                <p className="text-sm text-gray-600 mt-2">데이터 자동화 및 분석</p>
               </div>
               <div className="bg-white p-6 rounded-xl border border-gray-200 text-center hover:shadow-lg transition-shadow">
-                <div className="text-3xl mb-3">📋</div>
-                <h4 className="font-semibold text-gray-800">Google Sheets</h4>
-                <p className="text-sm text-gray-600 mt-2">협업 및 실시간 분석</p>
+                <div className="text-3xl mb-3">💼</div>
+                <h4 className="font-semibold text-gray-800">회계 ERP</h4>
+                <p className="text-sm text-gray-600 mt-2">자체기장 및 급여관리</p>
               </div>
               <div className="bg-white p-6 rounded-xl border border-gray-200 text-center hover:shadow-lg transition-shadow">
-                <div className="text-3xl mb-3">🎯</div>
-                <h4 className="font-semibold text-gray-800">MS Suite</h4>
-                <p className="text-sm text-gray-600 mt-2">Office, Teams 활용</p>
+                <div className="text-3xl mb-3">🏛️</div>
+                <h4 className="font-semibold text-gray-800">홈택스 세무신고</h4>
+                <p className="text-sm text-gray-600 mt-2">부가세, 원천세 신고</p>
               </div>
               <div className="bg-white p-6 rounded-xl border border-gray-200 text-center hover:shadow-lg transition-shadow">
-                <div className="text-3xl mb-3">⚡</div>
-                <h4 className="font-semibold text-gray-800">Power Query</h4>
-                <p className="text-sm text-gray-600 mt-2">데이터 수집 및 변환</p>
-              </div>
-              <div className="bg-white p-6 rounded-xl border border-gray-200 text-center hover:shadow-lg transition-shadow">
-                <div className="text-3xl mb-3">🏗️</div>
-                <h4 className="font-semibold text-gray-800">자동 스프레드시트</h4>
-                <p className="text-sm text-gray-600 mt-2">VBA, 매크로 활용</p>
+                <div className="text-3xl mb-3">🤖</div>
+                <h4 className="font-semibold text-gray-800">AI Agent</h4>
+                <p className="text-sm text-gray-600 mt-2">업무 자동화 도구</p>
               </div>
               <div className="bg-white p-6 rounded-xl border border-gray-200 text-center hover:shadow-lg transition-shadow">
                 <div className="text-3xl mb-3">📝</div>
                 <h4 className="font-semibold text-gray-800">Notion</h4>
-                <p className="text-sm text-gray-600 mt-2">프로젝트 관리</p>
+                <p className="text-sm text-gray-600 mt-2">프로젝트 및 테스크 관리</p>
               </div>
               <div className="bg-white p-6 rounded-xl border border-gray-200 text-center hover:shadow-lg transition-shadow">
-                <div className="text-3xl mb-3">🎨</div>
-                <h4 className="font-semibold text-gray-800">Figma</h4>
-                <p className="text-sm text-gray-600 mt-2">UI/UX 디자인</p>
+                <div className="text-3xl mb-3">💬</div>
+                <h4 className="font-semibold text-gray-800">Slack</h4>
+                <p className="text-sm text-gray-600 mt-2">팀 커뮤니케이션</p>
+              </div>
+              <div className="bg-white p-6 rounded-xl border border-gray-200 text-center hover:shadow-lg transition-shadow">
+                <div className="text-3xl mb-3">🔐</div>
+                <h4 className="font-semibold text-gray-800">하드월렛 관리</h4>
+                <p className="text-sm text-gray-600 mt-2">렛져, 트레져 보안</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* 두 번째 페이지: 모든 경력 정보 */}
-        <div className="page-break-before">
+        <div id="second-page" className="bg-white shadow-2xl">
           <div className="p-12">
             <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">경력 현황</h2>
             
@@ -371,9 +526,10 @@ export default function PDFPage() {
       <style jsx>{`
         /* PDF 출력 전용 스타일 */
         #pdf-content {
-          font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+          font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif !important;
           line-height: 1.6;
           color: #1a1a1a;
+          background: white;
         }
         
         /* PDF 출력시 페이지 브레이크 */
@@ -402,7 +558,14 @@ export default function PDFPage() {
         
         /* HTML2Canvas 캡처 최적화 */
         .pdf-optimized {
-          background: white;
+          background: white !important;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          font-family: Arial, sans-serif !important;
+        }
+        
+        .pdf-optimized * {
+          font-family: Arial, sans-serif !important;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
@@ -419,7 +582,7 @@ export default function PDFPage() {
         
         /* 텍스트 대비 개선 */
         .text-high-contrast {
-          color: #111827;
+          color: #111827 !important;
           font-weight: 500;
         }
         
@@ -427,6 +590,23 @@ export default function PDFPage() {
         .icon-optimized {
           font-size: 2rem;
           line-height: 1;
+        }
+        
+        /* 강제 스타일 적용 */
+        .pdf-optimized h1,
+        .pdf-optimized h2,
+        .pdf-optimized h3,
+        .pdf-optimized h4,
+        .pdf-optimized h5,
+        .pdf-optimized h6 {
+          font-family: Arial, sans-serif !important;
+          font-weight: bold !important;
+        }
+        
+        .pdf-optimized p,
+        .pdf-optimized span,
+        .pdf-optimized div {
+          font-family: Arial, sans-serif !important;
         }
       `}</style>
     </div>
